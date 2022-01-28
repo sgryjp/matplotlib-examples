@@ -2,6 +2,8 @@ altair
 matplotlib
 numpy
 pandas
+plotly
 scikit-learn
 seaborn
 statsmodels
+vega-datasets
