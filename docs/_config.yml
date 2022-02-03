@@ -1,8 +1,9 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: Matplotlib examples
+title: Matplotlib 基本のキ
 author: Suguru Yamamoto
+copyright: 2022, Suguru Yamamoto
 # logo: logo.png
 
 # Force re-execution of notebooks on each build.
