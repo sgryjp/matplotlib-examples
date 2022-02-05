@@ -2,3 +2,4 @@ flake8-black
 flake8-isort
 jupyterlab
 jupyterlab-code-formatter
+jupyterlab-git
