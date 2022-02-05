@@ -1,0 +1,778 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>散布図を描く &#8212; Matplotlib 基本のキ</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="はじめに" href="getting-started.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Matplotlib 基本のキ</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Matplotlib 基本のキ
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="getting-started.html">
+   はじめに
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   散布図を描く
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/scatter-plot.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/sgryjp/matplotlib-examples"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/sgryjp/matplotlib-examples/issues/new?title=Issue%20on%20page%20%2Fscatter-plot.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/sgryjp/matplotlib-examples/main?urlpath=tree/docs/scatter-plot.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   サンプルデータをロード
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   基本
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   マーカーの形やサイズを変える
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   マーカーの色を変える
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     量的変数を色にマッピングする
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     質的変数を色にマッピングする
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot">
+   お手軽メソッド
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     plot
+    </span>
+   </code>
+   を使う方法
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pandas">
+   pandas データフレームでプロットする
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>散布図を描く</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   サンプルデータをロード
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   基本
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   マーカーの形やサイズを変える
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   マーカーの色を変える
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     量的変数を色にマッピングする
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     質的変数を色にマッピングする
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot">
+   お手軽メソッド
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     plot
+    </span>
+   </code>
+   を使う方法
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pandas">
+   pandas データフレームでプロットする
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
+<h1>散布図を描く<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>2 次元の散布図は 2 つの確率変数の間にある関係を可視化する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib_inline</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">)</span>
+<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s2">&quot;svg&quot;</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_rows&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>サンプルデータをロード<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>このノートブックでは <a class="reference external" href="https://vega.github.io/vega-datasets/">vega_datasets</a> の <code class="docutils literal notranslate"><span class="pre">cars</span></code> データセットをサンプルデータとして使用する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vega_datasets</span> <span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">cars</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s2">&quot;cars&quot;</span><span class="p">)</span>
+<span class="n">cars</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Miles_per_Gallon</th>
+      <th>Cylinders</th>
+      <th>Displacement</th>
+      <th>Horsepower</th>
+      <th>Weight_in_lbs</th>
+      <th>Acceleration</th>
+      <th>Year</th>
+      <th>Origin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>chevrolet chevelle malibu</td>
+      <td>18.0</td>
+      <td>8</td>
+      <td>307.0</td>
+      <td>130.0</td>
+      <td>3504</td>
+      <td>12.0</td>
+      <td>1970-01-01</td>
+      <td>USA</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>buick skylark 320</td>
+      <td>15.0</td>
+      <td>8</td>
+      <td>350.0</td>
+      <td>165.0</td>
+      <td>3693</td>
+      <td>11.5</td>
+      <td>1970-01-01</td>
+      <td>USA</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>plymouth satellite</td>
+      <td>18.0</td>
+      <td>8</td>
+      <td>318.0</td>
+      <td>150.0</td>
+      <td>3436</td>
+      <td>11.0</td>
+      <td>1970-01-01</td>
+      <td>USA</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>403</th>
+      <td>dodge rampage</td>
+      <td>32.0</td>
+      <td>4</td>
+      <td>135.0</td>
+      <td>84.0</td>
+      <td>2295</td>
+      <td>11.6</td>
+      <td>1982-01-01</td>
+      <td>USA</td>
+    </tr>
+    <tr>
+      <th>404</th>
+      <td>ford ranger</td>
+      <td>28.0</td>
+      <td>4</td>
+      <td>120.0</td>
+      <td>79.0</td>
+      <td>2625</td>
+      <td>18.6</td>
+      <td>1982-01-01</td>
+      <td>USA</td>
+    </tr>
+    <tr>
+      <th>405</th>
+      <td>chevy s-10</td>
+      <td>31.0</td>
+      <td>4</td>
+      <td>119.0</td>
+      <td>82.0</td>
+      <td>2720</td>
+      <td>19.4</td>
+      <td>1982-01-01</td>
+      <td>USA</td>
+    </tr>
+  </tbody>
+</table>
+<p>406 rows × 9 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>基本<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>散布図のプロットは <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html"><code class="docutils literal notranslate"><span class="pre">matplotlib.Axes.scatter</span></code> 関数</a> で行うのが基本形。もっとも一般的な散布図の使い方は、2 つの確率変数（プログラミング的には 1 次元の数値配列）の間にある関係を視覚的に表現する使い方だと思う。この場合、<code class="docutils literal notranslate"><span class="pre">scatter</span></code> の第一引数 <code class="docutils literal notranslate"><span class="pre">x</span></code> と第二引数 <code class="docutils literal notranslate"><span class="pre">y</span></code> に同じ長さの変数を指定すれば、<code class="docutils literal notranslate"><span class="pre">x</span></code> を横軸に、<code class="docutils literal notranslate"><span class="pre">y</span></code> を縦軸にマッピングして散布図を描いてくれる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">]</span>  <span class="c1"># ただの list や NumPy Array でも良い</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Miles_per_Gallon&quot;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">)</span>  <span class="c1"># ax.set_xlabel() でも可</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Miles per Gallon&quot;</span><span class="p">)</span>  <span class="c1"># ax.set_ylabel() でも可</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;MPG v.s. Horsepower&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scatter-plot_6_0.svg" src="_images/scatter-plot_6_0.svg" /></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>マーカーの形やサイズを変える<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>散布図のデータ点を表すマーカーの形は <code class="docutils literal notranslate"><span class="pre">marker</span></code> 引数で変更できる。たとえば <code class="docutils literal notranslate"><span class="pre">o</span></code> で丸、<code class="docutils literal notranslate"><span class="pre">x</span></code> でバツ印など、マーカーの見た目と似た形の半角英数字で指定する。かなり多くの形がサポートされているので、一度はリファレンスを確認しておくと良いだろう。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://matplotlib.org/stable/api/markers_api.html#module-matplotlib.markers">matplotlib.markers — Matplotlib documentation</a></p></li>
+</ul>
+<p>マーカーのサイズは <code class="docutils literal notranslate"><span class="pre">s</span></code> 引数に各点のサイズを格納した配列を渡すことで個別に変更できる。単純に好みのサイズでマーカーを描きたい場合は数値一つでサイズを指定すれば良い。また <code class="docutils literal notranslate"><span class="pre">x</span></code> や <code class="docutils literal notranslate"><span class="pre">y</span></code> に指定した数値列と同じ長さの数値列を指定すれば個々のマーカーのサイズを指定できる。これは、縦軸・横軸にマッピングした変数以外の変数をマーカーの大きさにマッピングできる（その変数が大きいほどマーカーのサイズも大きくなる）と言うこともできる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Miles_per_Gallon&quot;</span><span class="p">]</span>
+<span class="n">cylinders</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Cylinders&quot;</span><span class="p">]</span>
+<span class="n">cylinders</span> <span class="o">=</span> <span class="n">cylinders</span> <span class="o">*</span> <span class="mi">32</span>  <span class="c1"># シリンダー数＝サイズとすると小さすぎるので大きくする</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span>  <span class="c1"># ダイアモンド形</span>
+    <span class="n">s</span><span class="o">=</span><span class="n">cylinders</span><span class="p">,</span>  <span class="c1"># シリンダー数に応じて点の大きさを変える</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>  <span class="c1"># 点が重なると見にくいので10%の半透明にする</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Miles per Gallon&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;MPG v.s. Horsepower&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scatter-plot_8_0.svg" src="_images/scatter-plot_8_0.svg" /></div>
+</div>
+<p>なお上記の例ではテキトーに 32 倍した値をマーカーのサイズとしていたけれど、このような実装は対象とする変数の<a class="reference external" href="https://bellcurve.jp/statistics/glossary/1245.html">範囲</a>によって毎回ちょうど良い係数を試行錯誤で探すことになる。どのような範囲の変数に対しても通用するような描画処理を作りたければ、<a class="reference external" href="https://www.bing.com/search?q=min+max+%E6%AD%A3%E8%A6%8F%E5%8C%96">min-max 正規化</a>で変数の範囲を整える処理を追加しよう。</p>
+</div>
+<div class="section" id="id5">
+<h2>マーカーの色を変える<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>マーカーの色は <code class="docutils literal notranslate"><span class="pre">c</span></code> 引数、マーカー図形の輪郭線の色は <code class="docutils literal notranslate"><span class="pre">edgecolors</span></code> 引数、輪郭線の太さは <code class="docutils literal notranslate"><span class="pre">linewidth</span></code> で変更できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Miles_per_Gallon&quot;</span><span class="p">]</span>
+<span class="n">cylinders</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Cylinders&quot;</span><span class="p">]</span>
+<span class="n">cylinders</span> <span class="o">=</span> <span class="n">cylinders</span> <span class="o">**</span> <span class="mi">3</span>  <span class="c1"># シリンダ数＝サイズとすると小さすぎるので大きくする</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
+    <span class="n">s</span><span class="o">=</span><span class="n">cylinders</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+    <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Miles per Gallon&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;MPG v.s. Horsepower&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scatter-plot_11_0.svg" src="_images/scatter-plot_11_0.svg" /></div>
+</div>
+<div class="section" id="id6">
+<h3>量的変数を色にマッピングする<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>マーカーの色についてもサイズと同様に、<code class="docutils literal notranslate"><span class="pre">x</span></code> や <code class="docutils literal notranslate"><span class="pre">y</span></code> と同じ長さの配列を指定することでマーカーごとの色を変更できる。先ほどはサイズに変数をマッピングしたけれど、代わりに色にマッピングすると次のようになる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Miles_per_Gallon&quot;</span><span class="p">]</span>
+<span class="n">acceleration</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Acceleration&quot;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">acceleration</span><span class="p">,</span>  <span class="c1"># 加速性能の高さを色にマッピング</span>
+    <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Miles per Gallon&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;MPG v.s. Horsepower&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scatter-plot_14_0.svg" src="_images/scatter-plot_14_0.svg" /></div>
+</div>
+<p>特に変数を色にマッピングした場合は、カラーバーを同時に表示してあげると各データ点がどの程度の値なのかが分かりやすい。カラーバーを表示するには、散布図の Artist （<code class="docutils literal notranslate"><span class="pre">scatter</span></code> 関数の戻り値。詳細は <a class="reference external" href="https://matplotlib.org/stable/tutorials/introductory/usage.html#sphx-glr-tutorials-introductory-usage-py">matplotlib のチュートリアル</a>参照）に対して <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.colorbar.html"><code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot.colorbar</span></code> 関数</a>を適用すればよい。なお、カラーバーには横軸・縦軸と同様にラベル文字列を設定できるので、色に変数をマッピングした場合は何の変数をマッピングしたのかをラベル文字列で表示しておくと良いと思う。</p>
+<p>スカラー値と RGB 成分で決まる色の対応関係は、<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.colors.Colormap.html">カラーマップ</a>という仕組みで実現されている。特定のカラーマップを使いたい場面もあると思うので、変えられるということは覚えておいた方が良いと思う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Miles_per_Gallon&quot;</span><span class="p">]</span>
+<span class="n">acceleration</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Acceleration&quot;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">acceleration</span><span class="p">,</span>  <span class="c1"># 加速性能の高さを色にマッピング</span>
+    <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">,</span>  <span class="c1"># カラーマップ &quot;Reds&quot; を使用</span>
+<span class="p">)</span>
+<span class="n">colorbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>  <span class="c1"># カラーバーを表示</span>
+<span class="n">colorbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;Acceleration&quot;</span><span class="p">)</span>  <span class="c1"># カラーバーの説明を描画</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Miles per Gallon&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;MPG v.s. Horsepower&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scatter-plot_16_0.svg" src="_images/scatter-plot_16_0.svg" /></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>質的変数を色にマッピングする<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>カラーマップはスカラー値と色を対応付ける仕組みなので、質的変数を直接色にマッピングすることはできない。基本的には Ordinal Encoding で数値化すれば良いのだけれど、そこでカラーバーを表示しても嬉しくない。凡例に色付きで当該変数（要因）の水準を並べる形がよく見かける良い例だけれど、これは matplotlib では少々実現に手間がかかる。やや込み入ったコードになるけれど、書いてみると次のようになる。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ちなみに seaborn や altair であれば簡単に書けるので、それらに切り替えるという手もある。</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Patch</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Miles_per_Gallon&quot;</span><span class="p">]</span>
+
+<span class="c1"># 色にマッピングする質的変数に関する処理</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Origin&quot;</span><span class="p">]</span>
+<span class="n">origin_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>  <span class="c1"># 重複無く昇順で値を抽出</span>
+<span class="n">origin_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>  <span class="c1"># originの各値が「origin_namesの何番目か」を求める</span>
+    <span class="p">[</span><span class="n">origin_names</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">origin</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colormaps</span><span class="p">[</span><span class="s2">&quot;tab10&quot;</span><span class="p">]</span>  <span class="c1"># 離散カラーマップの tab10 を取得</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmap</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">origin_indices</span><span class="p">]</span>  <span class="c1"># 各データ点の色を決定</span>
+<span class="n">patches</span> <span class="o">=</span> <span class="p">[</span>  <span class="c1"># 凡例描画用に各水準の色で塗った図形を用意</span>
+    <span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">origin_names</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span>  <span class="c1"># 色成分のリストで個々のデータ点の色を指定</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_text</span><span class="p">(</span><span class="s2">&quot;Miles per Gallon&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">origin_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scatter-plot_19_0.svg" src="_images/scatter-plot_19_0.svg" /></div>
+</div>
+</div>
+</div>
+<div class="section" id="plot">
+<h2>お手軽メソッド <code class="docutils literal notranslate"><span class="pre">plot</span></code> を使う方法<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h2>
+<p>Axes の <code class="docutils literal notranslate"><span class="pre">plot</span></code> メソッドに “<code class="docutils literal notranslate"><span class="pre">.</span></code>” や “<code class="docutils literal notranslate"><span class="pre">o</span></code>” といったマークを表すコードを指定すれば手早く散布図を描くことができる。ただし、凝った描画はできないため、たとえば報告用など、キレイに仕上げるつもりがあれば最初から <code class="docutils literal notranslate"><span class="pre">scatter</span></code> を使った方が良いと思う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="s2">&quot;Miles_per_Gallon&quot;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scatter-plot_21_0.svg" src="_images/scatter-plot_21_0.svg" /></div>
+</div>
+</div>
+<div class="section" id="pandas">
+<h2>pandas データフレームでプロットする<a class="headerlink" href="#pandas" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">scatter</span></code> メソッドは数値配列を受け取る代わりに <a class="reference external" href="https://pandas.pydata.org/">pandas</a> データフレームの列名を文字列で指定するスタイルにも対応している。具体的には <code class="docutils literal notranslate"><span class="pre">data</span></code> 引数にデータフレームを渡しておけば、<code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code> などに列名を文字列で渡せるようになる。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>実のところ、<code class="docutils literal notranslate"><span class="pre">data</span></code> 引数に pandas データフレームを指定するメリットはこれしかない。個人的には、たとえば <code class="docutils literal notranslate"><span class="pre">x</span></code> に列名を指定したのだから自動的に横軸ラベルにも使って欲しいのだけれど、そういう便利な動作は行われない。もし、そのような便利な動作を期待してしまうなら、<a class="reference external" href="http://seaborn.pydata.org/">seaborn</a> や <a class="reference external" href="https://altair-viz.github.io/">altair</a> をチェックしてみることをオススメする。</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Horsepower&quot;</span><span class="p">,</span>  <span class="c1"># データフレームの列名で変数を指定</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Miles_per_Gallon&quot;</span><span class="p">,</span>  <span class="c1"># データフレームの列名で変数を指定</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;Acceleration&quot;</span><span class="p">,</span>  <span class="c1"># データフレームの列名で変数を指定</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">cars</span><span class="p">,</span>  <span class="c1"># データフレームを指定</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scatter-plot_23_0.svg" src="_images/scatter-plot_23_0.svg" /></div>
+</div>
+<p>以上。</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="getting-started.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">はじめに</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Suguru Yamamoto<br/>
+    
+        &copy; Copyright 2022, Suguru Yamamoto.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
